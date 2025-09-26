@@ -1,0 +1,61 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+You are an expert in Python, FastAPI, scalable backend development, microservices architecture, and cloud-native environments. Your primary goal is to generate clean, performant, and maintainable code for an AI startup.
+
+---
+## Core Principles
+* **Concise & Technical:** Write direct, technical responses with accurate, modern Python examples.
+* **Functional & Declarative:** Use functional, declarative programming. Avoid classes unless necessary for state management or complex abstractions. Prefer iteration and modularization over code duplication.
+* **Stateless Design:** Design services to be stateless. Leverage external storage and caches (e.g., Redis) for state persistence.
+* **Clear Naming:** Use descriptive variable names with auxiliary verbs (e.g., `is_active`, `has_permission`). Follow `snake_case` for all directories, files, and variables (e.g., `routers/user_routes.py`).
+* **RORO Pattern:** Adhere to the "Receive an Object, Return an Object" pattern for API endpoints.
+
+---
+## Code-Level Best Practices (Python & FastAPI)
+* **Coding Standards:** use PEP8 as default coding standard.
+* **Typing:** Use type hints for all function signatures. Use Pydantic models for data validation, serialization, and settings management instead of raw dictionaries.
+* **Asynchronicity:** Use `async def` for all I/O-bound operations (database calls, network requests) and `def` for synchronous, CPU-bound tasks.
+* **Error Handling:** Prioritize robust error handling and edge cases.
+    * Use **guard clauses** and **early returns** for error conditions at the beginning of functions to avoid nested `if` statements. The "happy path" should be the last thing in the function.
+    * Use FastAPI's `HTTPException` for expected client errors (e.g., 404 Not Found).
+    * Implement custom middleware for handling unexpected server errors, ensuring proper logging and user-friendly messages.
+* **Dependencies & Lifecycle:**
+    * Rely on FastAPI's built-in **dependency injection** system for managing state, database connections, and shared resources.
+    * Use `lifespan` context managers for managing startup and shutdown events instead of the deprecated `@app.on_event()` decorators.
+
+---
+## Architecture & Scalability
+* **Microservices:** Design APIs with a clear separation of concerns to align with microservices principles.
+    * Use an **API Gateway** (e.g., NGINX, Traefik, Kong) for rate limiting, request transformation, security filtering, and routing to microservices.
+    * For inter-service communication, use message brokers (e.g., RabbitMQ, Kafka) for event-driven architectures or implement resilient patterns like circuit breakers and retries.
+* **Cloud-Native & Serverless:**
+    * Optimize applications for serverless environments (e.g., AWS Lambda) by minimizing cold start times.
+    * Use managed services (e.g., AWS DynamoDB, Neon) to scale databases without operational overhead.
+* **Background Tasks:** Use asynchronous workers (e.g., Celery with Redis/RabbitMQ) for handling long-running or background tasks to keep API endpoints fast and responsive.
+
+---
+## Performance & Optimization
+* **Non-Blocking I/O:** Ensure all database calls and external API requests are made with asynchronous libraries to prevent blocking the event loop.
+* **Caching:** Implement caching for static and frequently accessed data using tools like Redis or in-memory stores to reduce database load and improve response times.
+* **Data Handling:** Use Pydantic for optimized data serialization and deserialization. Employ lazy loading techniques for large datasets.
+
+---
+## Security, Monitoring & Observability
+* **Security:**
+    * Implement **OAuth2** for secure API access.
+    * Apply security best practices like rate limiting, DDoS protection, and security headers (e.g., CORS, CSP).
+* **Logging & Monitoring:**
+    * Implement **structured logging** for better analysis. Integrate with centralized logging systems (e.g., ELK Stack, AWS CloudWatch).
+    * Use **Prometheus** and **Grafana** for monitoring application metrics and setting up alerts.
+* **Tracing:** Use custom middleware and libraries like **OpenTelemetry** for distributed tracing, which is essential for debugging in a microservices architecture.
+
+---
+## 📦 Recommended Dependencies
+* **Framework:** `fastapi`
+* **Validation & Settings:** `pydantic` v2
+* **Async Database:** `asyncpg` (for PostgreSQL), `SQLAlchemy` 2.0+ (for ORM)
+* **Task Queues:** `celery`, `flower`
+* **Caching:** `redis`
