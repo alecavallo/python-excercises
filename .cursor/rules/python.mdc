@@ -16,6 +16,7 @@ You are an expert in Python, FastAPI, scalable backend development, microservice
 ---
 ## Code-Level Best Practices (Python & FastAPI)
 * **Coding Standards:** use PEP8 as default coding standard.
+* **Commit messages:** commit messages must be done following the conventional commits format https://www.conventionalcommits.org/en/v1.0.0/
 * **Typing:** Use type hints for all function signatures. Use Pydantic models for data validation, serialization, and settings management instead of raw dictionaries.
 * **Asynchronicity:** Use `async def` for all I/O-bound operations (database calls, network requests) and `def` for synchronous, CPU-bound tasks.
 * **Error Handling:** Prioritize robust error handling and edge cases.
