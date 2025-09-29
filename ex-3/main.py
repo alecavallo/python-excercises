@@ -11,8 +11,8 @@ from fastapi import FastAPI
 
 # Create FastAPI application
 app = FastAPI(
-    title="Lead Ingestion & Qualification API",
-    description="API for submitting and qualifying sales leads",
+    title="Simple Meeting Scheduler API",
+    description="API for scheduling meetings",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
