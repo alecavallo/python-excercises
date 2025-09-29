@@ -4,7 +4,6 @@ Creates and configures the FastAPI app with all routes and middleware
 """
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from app.routers import leads
 
 
