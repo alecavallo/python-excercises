@@ -227,3 +227,4 @@ yarn-error.log*
 *.tar.gz
 *.rar
 ex-3/docker/postgres/data/*
+ex-3/docker/database.env
