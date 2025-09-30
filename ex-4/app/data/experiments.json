@@ -1,0 +1,24 @@
+{
+    "new-signup-flow": {
+        "variants": [
+            "control",
+            "new-design"
+        ],
+        "weights": [
+            50,
+            50
+        ]
+    },
+    "pricing-model-test": {
+        "variants": [
+            "tier-a",
+            "tier-b",
+            "tier-c"
+        ],
+        "weights": [
+            60,
+            20,
+            20
+        ]
+    }
+}
