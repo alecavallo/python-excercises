@@ -1,0 +1,52 @@
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meeting-scheduler-postgres
+    environment:
+      POSTGRES_DB: meeting_scheduler
+      POSTGRES_USER: meeting_user
+      POSTGRES_PASSWORD: meeting_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persist PostgreSQL data
+      - ./postgres/data:/var/lib/postgresql/data
+      # Optional: Mount initialization scripts
+      - ./postgres/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U meeting_user -d meeting_scheduler"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - meeting-scheduler-network
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: meeting-scheduler-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://meeting_user:meeting_password@postgres:5432/meeting_scheduler
+      PYTHONPATH: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the application code for development
+      - ../:/app
+      # Mount requirements.txt as read-only
+      - ../requirements.txt:/app/requirements.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - meeting-scheduler-network
+
+networks:
+  meeting-scheduler-network:
+    driver: bridge
